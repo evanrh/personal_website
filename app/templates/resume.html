@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="resume">
+  <!-- Find good picture of me -->
+  <div id="picture">
+    
+  </div>
+  <div class="card" id="education">
+    <h2>EDUCATION</h2>
+    <div id="edu-content">
+      <div class="edu-card" id='edu-left'>
+        <h3>December 2021</h3>
+      </div>
+    
+      <div class="edu-card" id='edu-right'>
+        <h4>Clemson University: Clemson, SC</h4>
+        <ul id='clemson-items'>
+          <li><strong>Major:</strong> BS in Computer Science</li>
+          <li><strong>Minor:</strong> Cybersecurity</li>
+          <li><strong>Overall GPA:</strong> 3.91 / 4.00</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="experience">
+    <h2>EXPERIENCE</h2>
+    <div id="exp-content">
+		<div id="wireless">
+        <div class="exp-card" id="exp-left">
+          <h3>May 2020 - Present</h3>
+          <h4>Clemson University</h4>
+          <p>Network Services Team - Wireless Network Intern</p>
+        </div>
+        
+        <div class="exp-card" id="exp-right">
+          <ul class="exp-info">
+            <li>Wrote a tool to automate error logging and to notify a tech, saving ~2 hours a month</li>
+            <li>Wrote several scripts to help get statistics on client devices from a local server API</li>
+            <li>Conducted a wireless verification survey</li>
+            <li>Performed basic wireless troubleshooting</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="pickens">
+        <div class="exp-card" id="exp-left">
+          <h3>March 2019 - March 2020</h3>
+          <h4>School District of Pickens County</h4>
+          <p>Accountability, Information, and Technology Services Intern</p>
+        </div>
+        <div id="exp-right">
+          
+          <ul class="exp-info">
+            <li>Created an Arduino tool to automate installation and organization of Chrome OS onto ~450 desktops</li>
+            <li>Wrote scripts for various tasks that included getting site codes for schools and mass pinging to save time for my superiors
+</li>
+            <li>Learned a new drive cloning tool to upgrade several servers and save $1500 in upgrade costs</li>
+          </ul>
+        </div>
+      </div>
+      <hr></hr>
+      <div id="bilo">
+        
+        <div class="exp-card" id="exp-left">
+          <h3>July 2017 - July 2018</h3>
+          <h4>BiLo of Powdersville</h4>
+          <p>Customer Service Associate</p>
+        </div>
+        
+        <div class="exp-card" id="exp-right">
+          <ul class="exp-info">
+            <li>Managed and ran customer service desk as well as all front end associates</li>
+            <li>Served and helped customers who came through the front end</li>
+            <li>Trained several cashiers who also became customer service associates</li>
+          </ul>
+        </div>
+      </div>
+      <hr></hr>
+	 </div>
+  </div>
+  
+  <div class="card" id="skills">
+    
+  </div>
+  
+  <div class="card" id="interests">
+    
+  </div>
+  
+</div>
+{% endblock %}

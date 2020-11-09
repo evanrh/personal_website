@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %}
+        <title>{{title }} - Evan's Web Server</title>
+        {% else %}
+        <title>Evan's Web Server</title>
+        {% endif %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com">
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+		 {% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<ul class="flashes" style="padding:5x;margin:0;">
+					{% for message in messages %}
+						<div class="message_flash" style="padding:0;margin:0;colo: rgb(214, 41, 41);">{{message }}</div>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		{% endwith %}
+		 
+		  <div class="left-bar">
+        </div>
+        <div class="container">
+          <div class="navbar">
+            <a href='#'>
+            <h1>Evan Hastings</h1>
+            </a>
+            <ul class='nav-links'>
+              <li><a href="{{ url_for('index') }}">Home</a></li>
+              <li><a href="{{ url_for('contact') }}">Contact</a></li>
+				  <li><a href="{{ url_for('resume') }}">Resume</a></li>
+				  <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+				  <li><a href="{{ url_for('site') }}">Site Info</a></li>
+            </ul>
+          </div>
+          
+        {% block content %}
+        {% endblock %}
+
+        </div>
+        <div class="right-bar">
+        </div>
+    </body>
+</html>

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+	<h3>Welcome to my site!</h3>
+	<p>Below will be some links to features on the site, but you can also check out some other info from the navigation bar above</p>
+
+	<a href="{{ url_for('get_ip') }}">Get your public IP Address</a>
+{% endblock %}
