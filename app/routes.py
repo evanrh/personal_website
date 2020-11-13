@@ -1,10 +1,9 @@
-from app import app
+from app import app, db
 from flask import render_template, redirect, url_for, flash
 from flask import request, jsonify
 from flask import send_from_directory
 from flask_login import current_user, login_user
 from app.forms import LoginForm
-from .db_connect import DB_Connection
 
 @app.route('/')
 def index():
