@@ -1,4 +1,5 @@
-from app import app, db
+from app import app
+from app.models import User, Post, db
 from flask import render_template, redirect, url_for, flash
 from flask import request, jsonify
 from flask import send_from_directory

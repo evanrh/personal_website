@@ -1,14 +1,15 @@
 from flask import Flask
 from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from config import Config
 
 app = Flask(__name__, static_folder='static')
-login = LoginManager
+login = LoginManager()
 
 app.config.from_object(Config())
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
-from app import routes, models
+from app import routes, models, hooks
+from app.models import db, migrate
+
+db.init_app(app)
+migrate.init_app(app)
+hooks.webhook.init_app(app)
