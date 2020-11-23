@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "layout.jinja2" %}
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">
+<link rel="stylesheet" href="{{ url_for('home.static', filename='css/resume.css') }}">
 {% endblock %}
 
 {% block content %}

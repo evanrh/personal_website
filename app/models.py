@@ -1,10 +1,7 @@
 from flask_login import UserMixin
 from datetime import datetime
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-
-db = SQLAlchemy()
-migrate = Migrate()
+from werkzeug.security import generate_password_hash, check_password_hash
+from app import db, login
 
 class User(db.Model, UserMixin):
     __tablename__ = "user"
@@ -17,12 +14,23 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
+    def set_password(self, password):
+        self.pwd_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.pwd_hash, password)
+
 class Post(db.Model):
     __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    title = db.Column(db.String(80))
+    body = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))

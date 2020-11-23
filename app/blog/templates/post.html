@@ -1,0 +1,7 @@
+{% extends "base.jinja2" %}
+{% block postContent %}
+<h2>{{ post.title }}</h2>
+<p>
+    {{ post.body | markdown }}
+</p>
+{% endblock %}
