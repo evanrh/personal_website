@@ -66,10 +66,10 @@ def portfolio():
 def robots_txt():
     return send_from_directory(home.static_folder, request.path[1:])
 
-@home.errorhandler(404)
+@home.app_errorhandler(404)
 def not_found(e):
     return render_template('404.html'), 404
 
-@home.errorhandler(500)
+@home.app_errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
