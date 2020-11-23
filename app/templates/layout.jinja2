@@ -12,38 +12,32 @@
         {% endblock %}
     </head>
     <body>
-		 {% with messages = get_flashed_messages() %}
-			{% if messages %}
-				<ul class="flashes" style="padding:5x;margin:0;">
-					{% for message in messages %}
-						<div class="message_flash" style="padding:0;margin:0;color: rgb(214, 41, 41);">{{message }}</div>
-					{% endfor %}
-				</ul>
-			{% endif %}
-		{% endwith %}
-		 
-		  <div class="left-bar">
+      <div class="container">
+        <div class="navbar">
+          <a href="{{ url_for('home.index') }}">
+          <h1>Evan Hastings</h1>
+          </a>
+          <ul class='nav-links'>
+            <li><a href="{{ url_for('home.index') }}">Home</a></li>
+            <li><a href="{{ url_for('home.contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('home.resume') }}">Resume</a></li>
+            <li><a href="{{ url_for('home.portfolio') }}">Portfolio</a></li>
+            <li><a href="{{ url_for('home.site') }}">Site Info</a></li>
+          </ul>
         </div>
-        <div class="container">
-          <div class="navbar">
-            <a href='#'>
-            <h1>Evan Hastings</h1>
-            </a>
-            <ul class='nav-links'>
-              <li><a href="{{ url_for('home.index') }}">Home</a></li>
-              <li><a href="{{ url_for('home.contact') }}">Contact</a></li>
-              <li><a href="{{ url_for('home.resume') }}">Resume</a></li>
-              <li><a href="{{ url_for('home.portfolio') }}">Portfolio</a></li>
-              <li><a href="{{ url_for('home.site') }}">Site Info</a></li>
-            </ul>
-          </div>
-          
-        {% block content %}
-        {% endblock %}
-
-        </div>
-        <div class="right-bar">
-        </div>
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes" style="padding:5x;margin:0;">
+        {% for message in messages %}
+          <div class="message_flash" style="padding:0;margin:0;color: rgb(214, 41, 41);">{{ message }}</div>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+      {% block content %}
+      {% endblock %}
+      </div>
     </body>
     <footer>
       {% block footer %}

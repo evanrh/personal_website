@@ -14,7 +14,7 @@ def allowed_file(filename):
 @blog.route('/', methods=["GET"])
 def index():
     posts = Post.query.all()
-    return render_template('blogHome.jinja2', posts=posts, title="Blog posts")
+    return render_template('blog.jinja2', posts=posts, title="Blog posts")
 
 @blog.route('/posts/<int:id>', methods=['GET'])
 def posts(id):
