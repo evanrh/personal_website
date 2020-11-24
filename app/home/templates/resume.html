@@ -1,8 +1,6 @@
 {% extends "layout.jinja2" %}
 {% block head %}
-{% assets "home_less_bundle" %}
-<link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css">
-{% endassets %}
+<link rel="stylesheet" href="{{ url_for('home.static', filename='css/resume.css') }}" type="text/css">
 {% endblock %}
 
 {% block content %}
@@ -59,8 +57,7 @@
           
           <ul class="exp-info">
             <li>Created an Arduino tool to automate installation and organization of Chrome OS onto ~450 desktops</li>
-            <li>Wrote scripts for various tasks that included getting site codes for schools and mass pinging to save time for my superiors
-</li>
+            <li>Wrote scripts for various tasks that included getting site codes for schools and mass pinging to save time for my superiors</li>
             <li>Learned a new drive cloning tool to upgrade several servers and save $1500 in upgrade costs</li>
           </ul>
         </div>

@@ -6,10 +6,7 @@
         {% else %}
         <title>Evan's Web Server</title>
         {% endif %}
-        
-        {% assets "common_less_bundle" %}
-        <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css">
-        {% endassets %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css">
         <link rel="stylesheet" href="https://fonts.googleapis.com">
         {% block head %}
         {% endblock %}
@@ -26,6 +23,7 @@
             <li><a href="{{ url_for('home.resume') }}">Resume</a></li>
             <li><a href="{{ url_for('home.portfolio') }}">Portfolio</a></li>
             <li><a href="{{ url_for('home.site') }}">Site Info</a></li>
+            <li><a href="{{ url_for('blog.index') }}">Blog</a></li>
           </ul>
         </div>
         

@@ -1,4 +1,7 @@
 {% extends "layout.jinja2" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('blog.static', filename='css/blog.css') }}" type="text/css">
+{% endblock %}
 {% block content %}
 <div class="post_container">
     {% block postContent %}

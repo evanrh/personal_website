@@ -25,10 +25,6 @@ def get_ip():
         return render_template('ip-api.html', title='Get Your IP', 
                 user_ip=ip)
 
-@home.route('/signup', methods=["POST"])
-def signup():
-    return 
-
 @home.route('/login', methods=["GET","POST"])
 def login():
     if current_user.is_authenticated:
