@@ -13,8 +13,12 @@ def allowed_file(filename):
 
 @blog.route('/', methods=["GET"])
 def index():
+    return render_template('blog.jinja2', title="Blog Home")
+
+@blog.route('/posts', methods=['GET'])
+def postsList():
     posts = Post.query.all()
-    return render_template('blog.jinja2', posts=posts, title="Blog posts")
+    return render_template('post_list.jinja2', posts=posts, title="Blog Posts")
 
 @blog.route('/posts/<int:id>', methods=['GET'])
 def posts(id):

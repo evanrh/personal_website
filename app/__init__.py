@@ -24,7 +24,6 @@ def create_app():
 
         from .blog import blog
         from .home import home
-        from .asset import compile_static_assets
 
         # Register blueprints
         app.register_blueprint(home)

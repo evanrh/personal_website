@@ -1,12 +1,6 @@
 {% extends "base.jinja2" %}
 {% block content %}
-<h1>Posts</h1>
-{% if posts %}
-{% for post in posts %}
-    <div class="post-preview">
-        <span><a href="{{ url_for('blog.posts', id=post.id) }}">{{ post.user_id }}</a></span>
-        <span>{{ post.title }}</span>
-    </div>
-{% endfor %}
-{% endif %}
+<h1>Welcome to my Blog!</h1>
+<p>Click the link below to go see a list of all my posts</p>
+<a href="{{ url_for('blog.postsList') }}">Posts List</a>
 {% endblock %}
