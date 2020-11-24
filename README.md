@@ -3,13 +3,16 @@ _Large portions of this website's code are derived from the [Flask Mega Tutorial
 
 ## Dependencies
 All dependencies can be resolved by running
+
 ```
 pip3 install -r requirements.txt
 ```
+
 * [flask](https://flask.palletsprojects.com/en/1.1.x/)
 * [Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/)
 * [flask-migrate](https://flask-migrate.readthedocs.io/en/latest/)
 * [flask-login](https://flask-login.readthedocs.io/en/latest/)
+
 ## Setup
 ### Layout of .env
 **Required Variables**
@@ -20,6 +23,8 @@ pip3 install -r requirements.txt
     * Ex: `SECRET_KEY="p4ssw0rd"`
 * FLASK_APP: leave this set to resume.py
 
+### Server Configuration
+For asset building, the node package "less" is required, which if you are on Ubuntu can be installed with `sudo apt install node-less`
 
 ### Database Configuration
 Prior to running the site, you will need to have a functioning database, preferably with a user to login with. Below, are instructions for getting a SQLite database set up for use with this project

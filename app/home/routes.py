@@ -13,6 +13,7 @@ def index():
 
 @home.route('/resume')
 def resume():
+    print(url_for('home.static', filename='css/resume.css'))
     return render_template('resume.html', title='Resume')
 
 @home.route('/ip-api', methods=['GET'])

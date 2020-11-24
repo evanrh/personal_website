@@ -2,11 +2,14 @@
 <html>
     <head>
         {% if title %}
-        <title>{{title }} - Evan's Web Server</title>
+        <title>{{ title }} - Evan's Web Server</title>
         {% else %}
         <title>Evan's Web Server</title>
         {% endif %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        
+        {% assets "common_less_bundle" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css">
+        {% endassets %}
         <link rel="stylesheet" href="https://fonts.googleapis.com">
         {% block head %}
         {% endblock %}
