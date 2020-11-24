@@ -1,8 +1,9 @@
 {% extends "base.jinja2" %}
 {% block postContent %}
 <h1>{{ post.title }}</h1>
+<div id="author">By: {{ post.author.first_name + " " + post.author.last_name }}</div>
 <div class="timestamp">
-    <p>Uploaded on: {{ post.timestamp.strftime('%m/%d/%Y, %I:%M:%S %p') }}</p>
+    <p>Posted on: {{ post.timestamp.strftime('%m/%d/%Y, %I:%M:%S %p') }}</p>
 </div>
 <hr/>
 <div class="post-body">

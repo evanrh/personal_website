@@ -7,6 +7,8 @@ class User(db.Model, UserMixin):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
+    first_name = db.Column(db.String(20))
+    last_name = db.Column(db.String(40))
     email = db.Column(db.String(128), index=True, unique=True)
     pwd_hash = db.Column(db.String(128))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
