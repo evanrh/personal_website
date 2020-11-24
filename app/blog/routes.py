@@ -23,7 +23,7 @@ def postsList():
 @blog.route('/posts/<int:id>', methods=['GET'])
 def posts(id):
     post = Post.query.filter_by(id=id).first()
-    return render_template('post.html', post=post)
+    return render_template('post.html', post=post, title=post.title)
 
 @blog.route('/upload', methods=['GET','POST'])
 @login_required
