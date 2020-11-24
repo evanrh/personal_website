@@ -17,7 +17,7 @@ def create_app():
     with app.app_context():
 
         db.init_app(app)
-        migrate.init_app(app)
+        migrate.init_app(app, db)
         login.init_app(app)
         Markdown(app)
 
@@ -25,5 +25,7 @@ def create_app():
         from .home import home
         app.register_blueprint(home)
         app.register_blueprint(blog)
+
+        from app import models
 
         return app
