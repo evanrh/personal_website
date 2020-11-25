@@ -37,7 +37,7 @@ def upload():
                 text = ''.join([line.decode('utf-8') for line in file])
                 post = Post(title=form.title.data, body=text, user_id=current_user.id)
                 if 'categories' in request.form.keys():
-                    categories = form.data.categories.split(',')
+                    categories = form.categories.data.split(',')
                     categories = list(map(lambda c: post.categories.append(Category(name=c)), categories))
                 db.session.add(post)
                 db.session.commit()
