@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% set site = "Evan's Web Server" %}
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      {% block description %}<meta name="description" content="Evan Hastings' Web Server">{% endblock %}
+      {% block metaTags %}<meta name="keywords" content="Python,Resume,Flask,Networking,Security">{% endblock %}
       {% if title %}
-      <title>{{ title }} - Evan's Web Server</title>
+      <title>{{ title }} - {{ site }}</title>
       {% else %}
-      <title>Evan's Web Server</title>
+      <title>{{ site }}</title>
       {% endif %}
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
       <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css">
@@ -17,9 +20,7 @@
 		  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
 		  <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
 		  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
-        {% block head %}
-        {% endblock %}
+      {% block head %}{% endblock %}
     </head>
     <body>
       <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -40,7 +41,7 @@
           </div>
         </nav>
 
-      <div id="content" class="container">
+      <div id="content-container" class="container">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul class="flashes" style="padding:5x;margin:0;">
@@ -51,8 +52,7 @@
         {% endif %}
         {% endwith %}
         <div class="content">
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
         </div>
       </div>
     </body>

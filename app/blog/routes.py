@@ -23,7 +23,8 @@ def postsList():
 @blog.route('/posts/<int:id>', methods=['GET'])
 def posts(id):
     post = Post.query.get(id)
-    return render_template('post.html', post=post, title=post.title)
+    categories = [cat.name for cat in post.categories if cat.name != '']
+    return render_template('post.jinja2', post=post, title=post.title, categories=categories)
 
 @blog.route('/upload', methods=['GET','POST'])
 @login_required
@@ -42,4 +43,4 @@ def upload():
                 db.session.add(post)
                 db.session.commit()
                 return redirect(url_for('blog.upload'))
-    return render_template('upload.html', title="Upload New Post", form=form)
+    return render_template('upload.jinja2', title="Upload New Post", form=form)

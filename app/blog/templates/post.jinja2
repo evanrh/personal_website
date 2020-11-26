@@ -1,4 +1,13 @@
 {% extends "base.jinja2" %}
+{% block description %}<meta name="description" content="{{ post.title }}">{% endblock %}
+{% block metaTags %}
+{% if categories %}
+<meta name="keywords" content="{{ ','.join(categories) }}">
+{% else %}
+{{ super() }}
+{% endif %}
+<meta name="author" content="{{ post.author.first_name + ' ' + post.author.last_name }}">
+{% endblock %}
 {% block postContent %}
 <h1>{{ post.title }}</h1>
 <div id="author">By: {{ post.author.first_name + " " + post.author.last_name }}</div>
