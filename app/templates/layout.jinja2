@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        {% if title %}
-        <title>{{ title }} - Evan's Web Server</title>
-        {% else %}
-        <title>Evan's Web Server</title>
-        {% endif %}
-        <link rel="stylesheet" href="https://fonts.googleapis.com">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha38    4-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      {% if title %}
+      <title>{{ title }} - Evan's Web Server</title>
+      {% else %}
+      <title>Evan's Web Server</title>
+      {% endif %}
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css">
 
 		  <!-- Favicon links -->
 		  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
 		  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
 		  <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
 		  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -24,21 +22,29 @@
         {% endblock %}
     </head>
     <body>
-      <div class="container">
-        <div class="navbar">
-          <a href="{{ url_for('home.index') }}">
-          <h1>Evan Hastings</h1>
-          </a>
-          <ul class='nav-links'>
-            <li><a href="{{ url_for('home.index') }}">Home</a></li>
-            <li><a href="{{ url_for('home.contact') }}">Contact</a></li>
-            <li><a href="{{ url_for('home.resume') }}">Resume</a></li>
-            <li><a href="{{ url_for('home.portfolio') }}">Portfolio</a></li>
-            <li><a href="{{ url_for('home.site') }}">Site Info</a></li>
-            <li><a href="{{ url_for('blog.index') }}">Blog</a></li>
-          </ul>
-        </div>
-        
+      <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="{{ url_for('home.index') }}">Evan Hastings</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="navbar navbar-collapse">
+            <ul class='navbar-nav mr-auto'>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('home.index') }}">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('home.contact') }}">Contact</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('home.resume') }}">Resume</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('home.portfolio') }}">Portfolio</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('home.site') }}">Site Info</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('blog.index') }}">Blog</a></li>
+            </ul>
+          </div>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </nav>
+
+      <div id="content" class="container">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul class="flashes" style="padding:5x;margin:0;">
@@ -55,8 +61,10 @@
       </div>
     </body>
     <footer>
-      <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-      <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
       {% block footer %}
       {% endblock %}
     </footer>
