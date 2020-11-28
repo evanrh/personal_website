@@ -11,6 +11,13 @@
 			{% endfor %}
 		</p>
 		<p>
+			{{ form.preview.label }}<br>
+			{{ form.preview(cols="50", rows="20") }}
+			{% for error in form.preview.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
 			{{ form.post.label }}<br>
 			{{ form.post(size=32) }}
 			{% for error in form.post.errors %}

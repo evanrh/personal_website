@@ -18,7 +18,7 @@ def create_app():
 
         # Initialize database, login manager, migration, and assets with app
         db.init_app(app)
-        migrate.init_app(app, db)
+        migrate.init_app(app, db, render_as_batch=True)
         login.init_app(app)
         Markdown(app)
 

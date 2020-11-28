@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, request
+from flask import render_template, url_for, redirect, request, flash
 from . import blog
 from ..models import User, Post, Category
 from .. import db
@@ -13,18 +13,28 @@ def allowed_file(filename):
 
 @blog.route('/', methods=["GET"])
 def index():
-    return render_template('blog.jinja2', title="Blog Home")
+    posts = Post.query.all()
+    return render_template('blog.jinja2', posts=posts, title="Blog Home")
 
 @blog.route('/posts', methods=['GET'])
-def postsList():
-    posts = Post.query.all()
-    return render_template('post_list.jinja2', posts=posts, title="Blog Posts")
+def posts():
+    return redirect(url_for('blog.index'))
 
 @blog.route('/posts/<int:id>', methods=['GET'])
-def posts(id):
+def post(id):
     post = Post.query.get(id)
     categories = [cat.name for cat in post.categories if cat.name != '']
     return render_template('post.jinja2', post=post, title=post.title, categories=categories)
+
+@blog.route('/posts/<string:category>')
+def postsCategory(category):
+    posts = Category.query.get(category)
+
+    if posts:
+        return render_template('post_list.jinja2', posts=posts.posts, title="Category: {}".format(category.capitalize()))
+    else:
+        flash('No such category')
+        return redirect(url_for('blog.index'))
 
 @blog.route('/upload', methods=['GET','POST'])
 @login_required
@@ -36,11 +46,20 @@ def upload():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 text = ''.join([line.decode('utf-8') for line in file])
-                post = Post(title=form.title.data, body=text, user_id=current_user.id)
+                post = Post(title=form.title.data, body=text, user_id=current_user.id, preview=form.preview.data)
                 if 'categories' in request.form.keys():
-                    categories = form.categories.data.split(',')
-                    categories = list(map(lambda c: post.categories.append(Category(name=c)), categories))
+                    categories = [x.strip().lower() for x in form.categories.data.split(',')]
+                    cats_in_db = [x.name for x in Category.query.filter(Category.name.in_(categories))]
+                    categories = list(map(lambda x: Category.query.filter_by(name=x).first() if x in cats_in_db else Category(name=x), categories))
+                    print(categories)
+                    for cat in categories:
+                        print(cat)
+                    _ = list(map(lambda c: post.categories.append(c), categories))
                 db.session.add(post)
                 db.session.commit()
+                flash('Successfully uploaded post!')
+                return redirect(url_for('blog.upload'))
+            else:
+                flash('Unallowed filetype or no file data')
                 return redirect(url_for('blog.upload'))
     return render_template('upload.jinja2', title="Upload New Post", form=form)

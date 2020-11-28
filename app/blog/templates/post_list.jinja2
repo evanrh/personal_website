@@ -4,7 +4,15 @@
 {% if posts %}
 {% for post in posts %}
     <div class="post-preview">
-        <span><a href="{{ url_for('blog.posts', id=post.id) }}">{{ post.title }}</a></span>
+        <div class="card">
+            <div class="card-body">
+                <a href="{{ url_for('blog.post', id=post.id) }}">
+                    <div class="card-title">{{ post.title }}</div>
+                </a>
+                <p class="card-text">{{ post.preview }}</p>
+            </div>
+                
+        </div>
     </div>
 {% endfor %}
 {% endif %}

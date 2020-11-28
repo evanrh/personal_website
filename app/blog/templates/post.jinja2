@@ -14,8 +14,16 @@
 <div class="timestamp">
     <p>Posted on: {{ post.timestamp.strftime('%m/%d/%Y, %I:%M:%S %p') }}</p>
 </div>
+<div id="categories">
+    <p>Categories:
+    {% for category in categories %}
+        <a href="{{ url_for('blog.postsCategory', category=category) }}" class="btn btn-info btn-sm" role="button">{{ category | title }}</a>
+    {% endfor %}
+    </p>
+</div>
 <hr/>
 <div class="post-body">
+    <p>{{ post.preview }}</p>
     {{ post.body | markdown }}
 </div>
 {% endblock %}
