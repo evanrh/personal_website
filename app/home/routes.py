@@ -16,15 +16,6 @@ def resume():
     print(url_for('home.static', filename='css/resume.css'))
     return render_template('resume.html', title='Resume')
 
-@home.route('/ip-api', methods=['GET'])
-def get_ip():
-    ip = request.headers.get('X-Forwarded-For')
-    if request.args.get('json'):
-        return jsonify({'ip': ip}), 200
-    else:
-        return render_template('ip-api.html', title='Get Your IP', 
-                user_ip=ip)
-
 @home.route('/login', methods=["GET","POST"])
 def login():
     if current_user.is_authenticated:

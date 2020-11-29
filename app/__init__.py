@@ -24,10 +24,12 @@ def create_app():
 
         from .blog import blog
         from .home import home
+        from .admin import admin
 
         # Register blueprints
         app.register_blueprint(home)
         app.register_blueprint(blog)
+        app.register_blueprint(admin)
 
         # Compile static assets
 

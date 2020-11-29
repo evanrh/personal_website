@@ -1,7 +1,5 @@
 {% extends "layout.jinja2" %}
 {% block content %}
-	<h3>Welcome to my site!</h3>
-	<p>Below will be some links to features on the site, but you can also check out some other info from the navigation bar above</p>
-
-	<a href="{{ url_for('home.get_ip') }}">Get your public IP Address</a>
+	<h1>Evan Hastings' Personal Website</h1>
+	<p>Welcome to my site! If you would like to know more about it, please check out the <a href="{{ url_for('home.site') }}">Site Info</a> tab, or look in my <a href="{{ url_for('blog.index') }}">blog posts</a></p>
 {% endblock %}
