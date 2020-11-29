@@ -9,10 +9,13 @@
                 <h5>{{ post.title }}</h5>
             </a>
             <h6 class="card-subtitle mb-2 text-muted">{{ post.timestamp.strftime('%m/%d/%Y, %I:%M:%S %p') }}</h6>
-            <p class="card-text">{{ post.preview }}</p>
+            <h6 class="card-subtitle mb-2 text-muted">Categories: 
             {% for category in post.categories %}
-                <a href="{{ url_for('blog.postsCategory', category=category.name) }}" class="btn btn-info btn-sm card-link">{{ category.name.capitalize() }}</a>
+                <a href="{{ url_for('blog.postsCategory', category=category.name) }}" class="btn btn-info btn-xs">{{ category.name.capitalize() }}</a>
             {% endfor %}
+            </h6>
+            <p class="card-text">{{ post.preview }}</p>
+            <a href="{{ url_for('blog.post', id=post.id) }}" class="btn btn-primary btn-sm card-link" role="button">View Post</a>
         </div>
     </div>
 </div>
