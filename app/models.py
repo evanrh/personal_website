@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login
 
 categories = db.Table('categories',
-                        db.Column('category_id', db.Integer, db.ForeignKey('category.id'), primary_key=True),
+                        db.Column('category_name', db.String(25), db.ForeignKey('category.name'), primary_key=True),
                         db.Column('post_id', db.Integer, db.ForeignKey('post.id'), primary_key=True))
 
 class User(db.Model, UserMixin):
@@ -31,7 +31,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
     body = db.Column(db.Text, nullable=False)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow, nullable=False)
+    preview = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.now, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     categories = db.relationship('Category', secondary=categories, lazy='subquery',
         backref=db.backref('posts', lazy=True))
@@ -41,8 +42,7 @@ class Post(db.Model):
 
 class Category(db.Model):
     __tablename__ = "category"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(25), index=True, unique=True)
+    name = db.Column(db.String(25), primary_key=True)
 
     def __repr__(self):
         return '<Category {}>'.format(self.name)
