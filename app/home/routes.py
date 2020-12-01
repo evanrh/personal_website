@@ -1,11 +1,13 @@
-from ..models import User, Post
-from flask import render_template, redirect, url_for, flash
-from flask import request, jsonify
+from ..models import User, Post, PageView
+from flask import render_template, redirect, url_for, flash, abort
+from flask import request, jsonify, Response
 from flask import send_from_directory
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
+from base64 import b64decode
 from .forms import LoginForm
 from . import home
+from .. import db
 
 @home.route('/')
 def index():
@@ -53,6 +55,22 @@ def portfolio():
 @home.route("/robots.txt")
 def robots_txt():
     return send_from_directory(home.static_folder, request.path[1:])
+
+@home.route('/static/a.gif')
+def analyze():
+    if not request.args.get('url'):
+        abort(404)
+    
+    beacon = b64decode('R0lGODlhAQABAIAAANvf7wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==')
+
+    # Create page view and add to database
+    page = PageView.create_from_request()
+    db.session.add(page)
+    db.session.commit()
+
+    response = Response(beacon, mimetype='image/gif')
+    response.headers['Cache-Control'] = 'private, no-cache'
+    return response
 
 @home.app_errorhandler(404)
 def not_found(e):
