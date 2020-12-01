@@ -5,6 +5,7 @@ from .. import db
 from .forms import UploadForm
 from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
+from sqlalchemy import func
 
 ALLOWED_EXTENSIONS = ['md']
 def allowed_file(filename):
@@ -20,15 +21,17 @@ def index():
 def posts():
     return redirect(url_for('blog.index'))
 
-@blog.route('/posts/<int:id>', methods=['GET'])
-def post(id):
-    post = Post.query.get(id)
+@blog.route('/posts/<string:postname>', methods=['GET'])
+def post(postname):
+    post = Post.query.filter(Post.title.ilike(' '.join(postname.split('-')))).first_or_404()
+    print(' '.join(postname.split('-')))
+    print(post)
     categories = [cat.name for cat in post.categories if cat.name != '']
     return render_template('post.jinja2', post=post, title=post.title, categories=categories)
 
-@blog.route('/posts/<string:category>')
+@blog.route('/posts/category/<string:category>')
 def postsCategory(category):
-    posts = Category.query.get(category)
+    posts = Category.query.get_or_404(category)
 
     if posts:
         return render_template('post_list.jinja2', posts=posts.posts, title="Category: {}".format(category.capitalize()))
