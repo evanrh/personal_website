@@ -23,6 +23,8 @@ def posts():
 
 @blog.route('/posts/<string:postname>', methods=['GET'])
 def post(postname):
+
+    # Query to get the post name if it matches the url postname. ilike is an insensitive regex of sorts
     post = Post.query.filter(Post.title.ilike(' '.join(postname.split('-')))).first_or_404()
     print(' '.join(postname.split('-')))
     print(post)

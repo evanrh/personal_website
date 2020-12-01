@@ -6,9 +6,7 @@
     <div class="post-preview">
         <div class="card">
             <div class="card-body">
-                <a href="{{ url_for('blog.post', id=post.id) }}">
-                    <div class="card-title">{{ post.title }}</div>
-                </a>
+                {{ post_url(post.title) }}
                 <p class="card-text">{{ post.preview }}</p>
             </div>
                 

@@ -1,0 +1,5 @@
+{% macro post_url(name) %}
+<a href="{{ url_for('blog.post', postname='-'.join(name.lower().split(' '))) }}">
+    <div class="card-title">{{ name }}</div>
+</a>
+{% endmacro %}

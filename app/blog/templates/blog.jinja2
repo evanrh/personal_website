@@ -5,9 +5,7 @@
 <div class="post-preview">
     <div class="card">
         <div class="card-body">
-            <a class="card-title" href="{{ url_for('blog.post', postname='-'.join(post.title.lower().split(' '))) }}">
-                <h5>{{ post.title }}</h5>
-            </a>
+            {{ post_url(post.title) }}
             <h6 class="card-subtitle mb-2 text-muted">{{ post.timestamp.strftime('%m/%d/%Y, %I:%M:%S %p') }}</h6>
             <h6 class="card-subtitle mb-2 text-muted">Categories: 
             {% for category in post.categories %}
