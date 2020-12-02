@@ -20,7 +20,7 @@ def create_app():
         db.init_app(app)
         migrate.init_app(app, db, render_as_batch=True)
         login.init_app(app)
-        Markdown(app)
+        Markdown(app, extensions=['fenced_code', 'codehilite'])
 
         from .blog import blog
         from .home import home
