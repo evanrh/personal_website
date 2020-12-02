@@ -5,6 +5,7 @@ from flask import send_from_directory
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 from base64 import b64decode
+from datetime import timedelta
 from .forms import LoginForm
 from . import home
 from .. import db
@@ -28,7 +29,8 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('home.login'))
-        login_user(user, remember=form.remember_me.data)
+        # Set user remember me good for 1 day
+        login_user(user, remember=form.remember_me.data, duration=timedelta(days=1))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home.index')
