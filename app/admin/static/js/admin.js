@@ -63,9 +63,12 @@ $('button[name="save"]').click(function() {
     var parent = this.parentElement.previousElementSibling;
     var title = parent.querySelector('input[name="title"]').value;
     var preview = parent.querySelector('textarea[name="preview"]').value;
-    var id = this.parentElement.querySelector('div[name="id"]').innerText;
     var body = this.dataset.mde === 'edit' ? editPostMDE.value() : newPostMDE.value();
-    var arr = {'id': id, 'title': title, 'preview': preview, 'body': body};
+    var arr = {'title': title, 'preview': preview, 'body': body};
+    if( this.dataset.mde === 'edit' ) {
+        var id = this.parentElement.querySelector('div[name="id"]').innerText;
+        arr['id'] = id;
+    }
     $.ajax({
         url: $SCRIPT_ROOT + 'admin/_update-post',
         dataType: 'json',

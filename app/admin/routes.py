@@ -19,7 +19,7 @@ def index():
 
 @admin.route('/posts')
 def posts():
-    p = Post.query.all()
+    p = Post.query.order_by(Post.timestamp.desc()).all()
     return render_template('admin/posts.jinja2', posts=p)
 
 # AJAX Preview Rendering
@@ -53,6 +53,7 @@ def content():
     
     return jsonify(output)
 
+# AJAX route for updating post content, or creating a new post
 @admin.route('_update-post', methods=['POST'])
 def update():
     output = {}
@@ -61,12 +62,17 @@ def update():
     # Client should send back, id, post title, post body, and any categories
     if request.json:
         data = request.json
-        p = Post.query.get(data['id'])
-        p.title = data['title']
-        p.preview = data['preview']
-        p.body = data['body']
-        db.session.commit()
+        # Conditional determines if it is a new post or an updated one based off of id existing
+        post = Post.query.get(data['id']) if 'id' in data else Post()
+        post.title = data['title']
+        post.preview = data['preview']
+        post.body = data['body']
         
+        # Add new post to database session
+        if 'id' not in data:
+            db.session.add(post)
+        db.session.commit()
+            
         output['message'] = 'success'
 
     return jsonify(output)

@@ -13,7 +13,7 @@ def allowed_file(filename):
 
 @blog.route('/', methods=["GET"])
 def index():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
     return render_template('blog.jinja2', posts=posts, title="Blog Home")
 
 @blog.route('/posts', methods=['GET'])
