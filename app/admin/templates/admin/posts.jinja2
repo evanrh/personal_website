@@ -18,12 +18,20 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
+                        <label class="form-label" for="newTitle">Title</label>
+                        <input type="text" class="form-control" id="newTitle" name="title"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="newPreview">Preview Text</label>
+                        <input type="text" class="form-control" id="newPreview" name="preview"/>
+                    </div>
+                    <div class="form-group">
                         <label class="form-label" for="postFile">Import Post</label>
                         <input type="file" class="form-control-file" id="postFile">
                         <textarea class="form-control" id="postText" name="postText" rows="30"></textarea>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary" id="getPreview">Render</button>
+                        <button type="button" class="btn btn-primary" name="render">Render</button>
                     </div>
                 </form>
                 <div id="preview">
@@ -35,48 +43,54 @@
         </div>
     </div>
 </div>
-{% endblock %}
-{% block footer %}
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-<script>
-    var mde = new SimpleMDE({ element: document.getElementById('postText') });
-
-    function load_content(content) {
-        mde.value(content);
-    }
-
-    $("#postFile").change(function() {
-        var fr = new FileReader();
-        // On successful load of content, put into textarea
-        fr.onload = function() {
-            load_content(fr.result);
-        }
-        fr.readAsText($(this).prop('files')[0]);
-    });
-
-    function renderPreview(response) {
-        if( response['message'] === 'success') {
-            var preview = $('#preview');
-            preview.empty();
-            preview.html(response['content']);
-        }
-        else {
-            alert('Bad input or no input!');
-        }
-    };
-
-    $("#getPreview").click(function() {
-        var text = mde.value();
-        $.ajax({
-            url: $SCRIPT_ROOT + 'admin/_preview',
-            dataType: 'json',
-            method: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({'postText': text}),
-            success: function(response) {
-                renderPreview(response);
-            }
-        });
-    })
-</script>
+<div id="posts">
+{% if posts %}
+{% for post in posts %}
+<div class="card">
+    <div class="card-body">
+        {{ post.title }}
+        <p class="card-text">{{ post.preview }}</p>
+        <button data-id="{{ post.id }}" type="button" data-toggle='modal' data-target='#editPostModal' class="btn btn-primary btn-sm" name="editPost">Edit Post</button>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+</div>
+<div class="modal fade" id="editPostModal" tabeindex="-1" role="dialog" aria-labelledby="editPostModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newPostHeader">Add a New Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="title">Title</label>
+                    <input type="text" class="form-control" id="title" name="title"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="previewText">Preview Text</label>
+                    <textarea class="form-control" id="previewText" name="preview"></textarea>
+                </div>
+                <form>
+                    <div class="form-group">
+                        <textarea class="form-control" id="postContent" name="postContent" rows="30"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" name="render">Render</button>
+                    </div>
+                </form>
+                <div id="preview">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="display: none;" name="id"></div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" data-mde="edit" name="save">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
