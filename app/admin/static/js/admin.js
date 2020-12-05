@@ -96,3 +96,26 @@ $('button[name="addCategory"]').click(function() {
     node.name = 'categories-' + num;
     ul.appendChild(node);
 });
+
+function upload_new_post(form_id) {
+    var form = $('#' + form_id);
+
+    // Add submit button to form data
+    var submit = $('input[type="submit"]', form);
+
+    $.ajax({
+        data: form.serialize() + '&' + encodeURI( $(submit).attr('name') ) + '=' + encodeURI( $(submit).val() ),
+        type: 'POST',
+        url: $SCRIPT_ROOT + 'admin/_new-post',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType: 'json'
+    }).done(function(data) {
+        console.log(data);
+    });
+}
+
+$('#newPostForm').on('submit', function(event) {
+    event.preventDefault();
+    upload_new_post('newPostForm');
+    return false;
+})

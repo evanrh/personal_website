@@ -7,6 +7,6 @@ from wtforms.widgets import TextArea
 class NewPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     preview = StringField('Preview Text', validators=[DataRequired()], widget=TextArea())
-    body = StringField('Body', validators=[DataRequired()], widget=TextArea())
+    body = StringField('Body', widget=TextArea())
     categories = FieldList(StringField('Category'))
     submit = SubmitField('Save')

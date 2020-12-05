@@ -15,38 +15,40 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        {{ form.title.label(class_='form-label') }}
-                        {{ form.title(class_='form-control') }}
+            <form id="newPostForm">
+                <div class="modal-body">
+                    
+                        <div class="form-group">
+                            {{ form.title.label(class_='form-label') }}
+                            {{ form.title(class_='form-control') }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.preview.label(class_='form-label') }}
+                            {{ form.preview(class_='form-control') }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="postFile">Import Post</label>
+                            <input type="file" class="form-control-file" id="postFile">
+                            {{ form.body(class_='form-control', id='postText', rows='30') }}
+                        </div>
+                        <div class="form-group">
+                            
+                            {{ form.categories.label(class_='form-label') }}
+                            <button class="btn btn-primary" type="button" name="addCategory">Add</button>
+                            {{ form.categories() }}
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" name="render">Render</button>
+                        </div>
+                    
+                    <div id="preview">
                     </div>
-                    <div class="form-group">
-                        {{ form.preview.label(class_='form-label') }}
-                        {{ form.preview(class_='form-control') }}
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="postFile">Import Post</label>
-                        <input type="file" class="form-control-file" id="postFile">
-                        {{ form.body(class_='form-control', id='postText', rows='30') }}
-                    </div>
-                    <div class="form-group">
-                        
-                        {{ form.categories.label(class_='form-label') }}
-                        <button class="btn btn-primary" type="button" name="addCategory">Add</button>
-                        {{ form.categories() }}
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary" name="render">Render</button>
-                    </div>
-                </form>
-                <div id="preview">
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                {{ form.submit(class_='btn btn-primary', id='save', data_mde='new') }}
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {{ form.submit(class_='btn btn-primary', data_mde='new') }}
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -72,6 +74,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <form>
             <div class="modal-body">
                 <div class="form-group">
                     <label class="form-label" for="title">Title</label>
@@ -81,14 +84,12 @@
                     <label class="form-label" for="previewText">Preview Text</label>
                     <textarea class="form-control" id="previewText" name="preview"></textarea>
                 </div>
-                <form>
-                    <div class="form-group">
-                        <textarea class="form-control" id="postContent" name="postContent" rows="30"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary" name="render">Render</button>
-                    </div>
-                </form>
+                <div class="form-group">
+                    <textarea class="form-control" id="postContent" name="postContent" rows="30"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" name="render">Render</button>
+                </div>
                 <div id="preview">
                 </div>
             </div>
@@ -97,6 +98,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" data-mde="edit" name="save">Save</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

@@ -55,6 +55,21 @@ def content():
     
     return jsonify(output)
 
+# AJAX route for a new post submission
+@admin.route('_new-post', methods=['POST'])
+def newPost():
+    form = NewPostForm()
+    print(form.categories.validate(form))
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            print(form.title)
+            print(form.preview)
+            print(form.categories.entries)
+            return jsonify({'message': 'success'})
+        return jsonify({'message': 'no validate'})
+    
+    return jsonify({'message': 'failure'})
+
 # AJAX route for updating post content, or creating a new post
 @admin.route('_update-post', methods=['POST'])
 def update():
