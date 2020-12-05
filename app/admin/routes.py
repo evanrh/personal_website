@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, request, flash, jsonify
 import json
 from . import admin
-from .forms import NewPostForm
+from .forms import NewPostForm, EditPostForm
 from ..models import User, Post, Category
 from .. import db
 #from .forms import UploadForm
@@ -22,7 +22,8 @@ def index():
 def posts():
     p = Post.query.order_by(Post.timestamp.desc()).all()
     form = NewPostForm()
-    return render_template('admin/posts.jinja2', posts=p, form=form)
+    editForm = EditPostForm()
+    return render_template('admin/posts.jinja2', posts=p, form=form, editForm=editForm)
 
 # AJAX Preview Rendering
 @admin.route('/_preview', methods=['POST'])
@@ -59,12 +60,65 @@ def content():
 @admin.route('_new-post', methods=['POST'])
 def newPost():
     form = NewPostForm()
-    print(form.categories.validate(form))
+    
     if request.method == 'POST':
         if form.validate_on_submit():
-            print(form.title)
-            print(form.preview)
-            print(form.categories.entries)
+
+            # Create category objects
+            categories = []
+            for entry in form.categories.entries:
+                name = entry.data.lower()
+                cat = Category.query.get(name)
+                # cat == None if the category is not in the table
+                if not cat:
+                    cat = Category(name=name)
+                categories.append(cat)
+            
+            post = Post()
+            post.title = form.title.data
+            post.preview = form.preview.data
+            post.body  = form.body.data
+
+            for cat in categories:
+                post.categories.append(cat)
+            
+            db.session.add(post)
+            db.session.commit()
+
+            return jsonify({'message': 'success'})
+        return jsonify({'message': 'no validate'})
+    
+    return jsonify({'message': 'failure'})
+
+# AJAX route for a updating a post
+@admin.route('_new-post', methods=['POST'])
+def editPost():
+    form = EditPostForm()
+    
+    if request.method == 'POST':
+        if form.validate_on_submit():
+
+            # Create category objects
+            categories = []
+            for entry in form.categories.entries:
+                name = entry.data.lower()
+                cat = Category.query.get(name)
+                # cat == None if the category is not in the table
+                if not cat:
+                    cat = Category(name=name)
+                categories.append(cat)
+            
+            post = Post()
+            post.title = form.title.data
+            post.preview = form.preview.data
+            post.body  = form.body.data
+
+            for cat in categories:
+                post.categories.append(cat)
+            
+            db.session.add(post)
+            db.session.commit()
+
             return jsonify({'message': 'success'})
         return jsonify({'message': 'no validate'})
     
