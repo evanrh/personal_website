@@ -1,6 +1,7 @@
 from flask import render_template, url_for, redirect, request, flash, jsonify
 import json
 from . import admin
+from .forms import NewPostForm
 from ..models import User, Post, Category
 from .. import db
 #from .forms import UploadForm
@@ -20,7 +21,8 @@ def index():
 @admin.route('/posts')
 def posts():
     p = Post.query.order_by(Post.timestamp.desc()).all()
-    return render_template('admin/posts.jinja2', posts=p)
+    form = NewPostForm()
+    return render_template('admin/posts.jinja2', posts=p, form=form)
 
 # AJAX Preview Rendering
 @admin.route('/_preview', methods=['POST'])

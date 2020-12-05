@@ -85,3 +85,14 @@ $('button[name="save"]').click(function() {
         }
     });
 });
+
+// Add category button to list
+$('button[name="addCategory"]').click(function() {
+    var parent = this.parentElement;
+    var ul = parent.querySelector('ul');
+    var num = ul.children.length;
+    var node = document.createElement('input')
+    node.className = 'form-control';
+    node.name = 'categories-' + num;
+    ul.appendChild(node);
+});
