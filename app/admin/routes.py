@@ -53,15 +53,52 @@ def content():
             output['content'] = post.body
             output['title'] = post.title
             output['preview'] = post.preview
+            output['categories'] = [x.name.capitalize() for x in post.categories]
     
     return jsonify(output)
 
 # AJAX route for a new post submission
-@admin.route('_new-post', methods=['POST'])
-def newPost():
+@admin.route('_post-edit', methods=['POST'])
+def postEdit():
     form = NewPostForm()
+    editForm = EditPostForm()
+    
+    # Case for edit form being submitted
+    if editForm.validate_on_submit():
+
+        formCats = [cat.data.lower() for cat in form.categories.entries]
+        post = Post.query.get(editForm.id.data)
+
+        added = list(set(formCats) - set([x.name for x in post.categories]))
+        deleted = list(set([x.name for x in post.categories]) - set(formCats))
+        indexes = []
+        for i,x in enumerate(post.categories):
+            if x.name in deleted:
+                indexes.append(i)
+        for i in indexes:
+            del post.categories[i]
+        
+        categories = []
+        for name in added:
+            cat = Category.query.get(name)
+            # cat == None if the category is not in the table
+            if not cat:
+                cat = Category(name=name)
+            categories.append(cat)
+        
+        post.title = form.title.data
+        post.preview = form.preview.data
+        post.body = form.body.data
+
+        for cat in categories:
+            post.categories.append(cat)
+        db.session.commit()
+
+        return jsonify({'message': 'success'})
     
     if request.method == 'POST':
+
+        # Case for if submitted for is the new post form
         if form.validate_on_submit():
 
             # Create category objects
@@ -86,6 +123,7 @@ def newPost():
             db.session.commit()
 
             return jsonify({'message': 'success'})
+
         return jsonify({'message': 'no validate'})
     
     return jsonify({'message': 'failure'})

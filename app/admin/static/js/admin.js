@@ -1,6 +1,12 @@
 var newPostMDE = new SimpleMDE({ element: document.getElementById('postText')})
 var editPostMDE = new SimpleMDE({ element: document.getElementById('postContent') })
 
+function remove_all_child_nodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
 function load_content(content, editor) {
     editor.value(content);
 }
@@ -43,9 +49,16 @@ function modal_content(response, modal, mde) {
     load_content(response['content'], mde);
     modal.querySelector('input[name="title"]').value = response['title'];
     modal.querySelector('textarea[name="preview"]').value = response['preview'];
+    var categories = modal.querySelector('ul');
+    remove_all_child_nodes(categories);
+
+    for(var i = 0; i < response['categories'].length; i++) {
+        add_category_button(categories, response['categories'][i]);
+    }
 }
 $('button[name="editPost"]').click(function() {
-    document.getElementById('editPostModal').querySelector('.modal-footer > div[name="id"]').innerText = this.dataset.id;
+    var id_tool = document.getElementById('editPostForm').querySelector('input[id="id"]');
+    id_tool.value = this.dataset.id;
     $.ajax({
         url: $SCRIPT_ROOT + 'admin/_post-content',
         dataType: 'json',
@@ -58,43 +71,33 @@ $('button[name="editPost"]').click(function() {
     })
 });
 
-$('button[name="save"]').click(function() {
-    // Send post data off to database
-    var parent = this.parentElement.previousElementSibling;
-    var title = parent.querySelector('input[name="title"]').value;
-    var preview = parent.querySelector('textarea[name="preview"]').value;
-    var body = this.dataset.mde === 'edit' ? editPostMDE.value() : newPostMDE.value();
-    var arr = {'title': title, 'preview': preview, 'body': body};
-    if( this.dataset.mde === 'edit' ) {
-        var id = this.parentElement.querySelector('div[name="id"]').innerText;
-        arr['id'] = id;
-    }
-    $.ajax({
-        url: $SCRIPT_ROOT + 'admin/_update-post',
-        dataType: 'json',
-        method: 'POST',
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(arr),
-        success: function(response) {
-            if( response['message'] === 'success') {
-                window.location.reload();
-            }
-            else {
-                alert('Something went wrong');
-            }
-        }
-    });
-});
+function remove_parent(elem) {
+    elem.parentElement.remove();
+}
 
+function add_category_button(ul, value='') {
+    var num = ul.children.length;
+    var div = document.createElement('div');
+    var btn = document.createElement('button');
+    btn.innerHTML = '&times;';
+    btn.name = 'removeCategory';
+    btn.type = 'button';
+    btn.onclick = function() {
+        remove_parent(btn);
+    };
+    var node = document.createElement('input');
+    node.value = value;
+    node.className = 'form-control col-md-2';
+    node.name = 'categories-' + num;
+    div.appendChild(btn);
+    div.appendChild(node);
+    ul.appendChild(div);
+}
 // Add category button to list
 $('button[name="addCategory"]').click(function() {
     var parent = this.parentElement;
     var ul = parent.querySelector('ul');
-    var num = ul.children.length;
-    var node = document.createElement('input')
-    node.className = 'form-control';
-    node.name = 'categories-' + num;
-    ul.appendChild(node);
+    add_category_button(ul);
 });
 
 function upload_new_post(form_id) {
@@ -106,11 +109,11 @@ function upload_new_post(form_id) {
     $.ajax({
         data: form.serialize() + '&' + encodeURI( $(submit).attr('name') ) + '=' + encodeURI( $(submit).val() ),
         type: 'POST',
-        url: $SCRIPT_ROOT + 'admin/_new-post',
+        url: $SCRIPT_ROOT + 'admin/_post-edit',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType: 'json'
     }).done(function(data) {
-        console.log(data);
+        window.location.reload();
     });
 }
 
@@ -119,3 +122,11 @@ $('#newPostForm').on('submit', function(event) {
     upload_new_post('newPostForm');
     return false;
 })
+
+$('#editPostForm').on('submit', function(event) {
+    event.preventDefault();
+    upload_new_post('editPostForm');
+    return false;
+});
+
+$('')
