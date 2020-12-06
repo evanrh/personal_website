@@ -25,8 +25,6 @@ def post(postname):
 
     # Query to get the post name if it matches the url postname. ilike is an insensitive regex of sorts
     post = Post.query.filter(Post.title.ilike(' '.join(postname.split('-')))).first_or_404()
-    print(' '.join(postname.split('-')))
-    print(post)
     categories = [cat.name for cat in post.categories if cat.name != '']
     return render_template('post.jinja2', post=post, title=post.title, categories=categories)
 

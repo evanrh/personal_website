@@ -14,12 +14,14 @@ from werkzeug.utils import secure_filename
 def func():
     pass
 
+
 @admin.route('/')
 def index():
     return render_template('admin/home.jinja2')
 
 @admin.route('/posts')
 def posts():
+    print(current_user.id)
     p = Post.query.order_by(Post.timestamp.desc()).all()
     form = NewPostForm()
     editForm = EditPostForm()
@@ -112,6 +114,7 @@ def postEdit():
                 categories.append(cat)
             
             post = Post()
+            post.user_id = current_user.id
             post.title = form.title.data
             post.preview = form.preview.data
             post.body  = form.body.data
