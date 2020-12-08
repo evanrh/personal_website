@@ -34,7 +34,7 @@ class Post(db.Model):
     title = db.Column(db.String(80))
     body = db.Column(db.Text, nullable=False)
     preview = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now, nullable=False)
+    timestamp = db.Column(db.DateTime(timezone=True), index=True, default=datetime.now, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     categories = db.relationship('Category', secondary=categories, lazy='subquery',
         backref=db.backref('posts', lazy=True))

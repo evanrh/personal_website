@@ -1,16 +1,15 @@
-from flask import render_template, url_for, redirect, request, flash
+from flask import render_template, url_for, redirect, request, flash, make_response
 from . import blog
 from ..models import User, Post, Category
 from .. import db
 from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
 from sqlalchemy import func
+from feedgen.feed import FeedGenerator
+from datetime import datetime
 
-ALLOWED_EXTENSIONS = ['md']
-def allowed_file(filename):
-    return '.' in filename and \
-            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+def title_to_url(title):
+    return '-'.join([x.lower() for x in title.split(' ')])
 @blog.route('/', methods=["GET"])
 def index():
     posts = Post.query.order_by(Post.timestamp.desc()).all()
@@ -20,6 +19,29 @@ def index():
 def posts():
     return redirect(url_for('blog.index'))
 
+@blog.route('/rss')
+def rss():
+    fg = FeedGenerator()
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    root = request.url_root
+    root = root[0: len(root) - 1]
+    fg.title("Evan's Blog Feed")
+    fg.description('A feed for all posts made on my blog')
+    fg.link(href=root)
+
+    for post in posts:
+        fe = fg.add_entry()
+        fe.title(post.title)
+        fe.link(href=root + url_for('blog.post', postname=title_to_url(post.title)))
+        fe.description(post.preview)
+        fe.author(name='{} {}'.format(post.author.first_name, post.author.last_name))
+        fe.pubDate(post.timestamp.astimezone().isoformat())
+    
+    # Make rss into a renderable string and change content type header
+    response = make_response(fg.rss_str(pretty=True))
+    response.headers.set('Content-Type', 'application/rss+xml')
+
+    return response
 @blog.route('/posts/<string:postname>', methods=['GET'])
 def post(postname):
 

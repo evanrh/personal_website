@@ -4,7 +4,6 @@ from . import admin
 from .forms import NewPostForm, EditPostForm
 from ..models import User, Post, Category
 from .. import db
-#from .forms import UploadForm
 from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
 

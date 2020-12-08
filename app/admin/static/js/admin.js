@@ -33,6 +33,9 @@ function renderPreview(response) {
 
 $("button[name='render']").click(function() {
     var text = newPostMDE.value();
+
+    // Kinda hacky, but this is to get the edit post text rather than newPost
+    text = text ? text : editPostMDE.value();
     $.ajax({
         url: $SCRIPT_ROOT + 'admin/_preview',
         dataType: 'json',
@@ -128,5 +131,3 @@ $('#editPostForm').on('submit', function(event) {
     upload_new_post('editPostForm');
     return false;
 });
-
-$('')
