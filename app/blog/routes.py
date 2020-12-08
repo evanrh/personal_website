@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
 from sqlalchemy import func
 from feedgen.feed import FeedGenerator
-from datetime import datetime
+from datetime import datetime, timezone
 
 def title_to_url(title):
     return '-'.join([x.lower() for x in title.split(' ')])
@@ -22,7 +22,7 @@ def posts():
 @blog.route('/rss')
 def rss():
     fg = FeedGenerator()
-    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    posts = Post.query.order_by(Post.timestamp.asc()).all()
     root = request.url_root
     root = root[0: len(root) - 1]
     fg.title("Evan's Blog Feed")
@@ -35,7 +35,9 @@ def rss():
         fe.link(href=root + url_for('blog.post', postname=title_to_url(post.title)))
         fe.description(post.preview)
         fe.author(name='{} {}'.format(post.author.first_name, post.author.last_name))
-        fe.pubDate(post.timestamp.astimezone().isoformat())
+
+    # The replace fixes an issue with my production machine with naive datetimes
+        fe.pubDate(post.timestamp.replace(tzinfo=timezone.utc).astimezone().isoformat())
     
     # Make rss into a renderable string and change content type header
     response = make_response(fg.rss_str(pretty=True))
