@@ -44,7 +44,7 @@ def rss():
     response.headers.set('Content-Type', 'application/rss+xml')
 
     return response
-@blog.route('/posts/<string:postname>', methods=['GET'])
+@blog.route('/post/<string:postname>', methods=['GET'])
 def post(postname):
 
     # Query to get the post name if it matches the url postname. ilike is an insensitive regex of sorts
