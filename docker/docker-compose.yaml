@@ -1,0 +1,41 @@
+---
+version: "3.7"
+services:
+   nginx:
+      image: nginx:latest
+      ports:
+         - "8080:80"
+      volumes:
+         - ./config/nginx/conf.d:/etc/nginx/conf.d
+      depends_on:
+         - wsgi
+      networks:
+         - nginx_network
+   wsgi:
+      build:
+         dockerfile: py.Dockerfile
+         context: .
+      restart: always
+      env_file:
+         - ../.env
+      ports:
+         - "8080:8000"
+      depends_on:
+         - database
+      networks:
+         - nginx_network
+   database:
+      image: postgres:latest
+      restart: always
+      environment:
+          POSTGRES_USER: gunicorn_user
+          POSTGRES_PASSWORD: s00p3rs3cr34
+          POSTGRES_DB: website
+      volumes:
+         - database-data:/var/lib/postgresql/data
+volumes:
+   database-data:
+
+networks:
+   nginx_network:
+      driver: bridge
