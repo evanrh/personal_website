@@ -62,6 +62,8 @@ class PageView(db.Model):
     headers = db.Column(db.JSON)
     params = db.Column(db.JSON)
 
+    def __repr__(self):
+        return '<PageView {}: {}: {}>'.format(self.ip, self.url, self.timestamp)
     # Create a new PageView instance when a request is made
     @classmethod
     def create_from_request(cls):
