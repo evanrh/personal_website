@@ -42,11 +42,11 @@ def logout():
     logout_user()
     return redirect(url_for('home.index'))
 
-"""
 @home.route('/contact')
 def contact():
+    # TODO Add in contact form
+    return ''
     return render_template('contact.html', title='Contact')
-"""
 
 @home.route('/site-info')
 def site():
