@@ -3,5 +3,8 @@ RUN mkdir /app
 WORKDIR /app
 ADD requirements.txt /app
 ADD . /app
+ADD docker/config/wsgi/boot.sh ./
+RUN chmod +x boot.sh
+
 RUN pip3 install -r requirements.txt
-ENTRYPOINT ["gunicorn", "resume:create_app()", "-b", "0.0.0.0:8000"]
+ENTRYPOINT ["./boot.sh"]

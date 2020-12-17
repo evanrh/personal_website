@@ -13,7 +13,7 @@ services:
          - nginx_network
    wsgi:
       build:
-         dockerfile: docker/config/wsgi/py.Dockerfile
+         dockerfile: docker/config/wsgi/Dockerfile
          context: .
       restart: always
       env_file:

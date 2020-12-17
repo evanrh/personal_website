@@ -1,6 +1,7 @@
 __pycache__
 docker-compose.yaml
 docker
+!**/boot.sh
 venv
 .git
 .env
