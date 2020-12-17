@@ -1,25 +1,23 @@
 ---
 version: "3.7"
 services:
-   nginx:
+   web-server:
       image: nginx:latest
       ports:
          - "8000:80"
       volumes:
-         - ./config/nginx/conf.d:/etc/nginx/conf.d
+         - ./docker/config/nginx/conf.d:/etc/nginx/conf.d
       depends_on:
          - wsgi
       networks:
          - nginx_network
    wsgi:
       build:
-         dockerfile: docker/py.Dockerfile
+         dockerfile: docker/config/wsgi/py.Dockerfile
          context: .
       restart: always
       env_file:
-         - ./.env
-      ports:
-         - "8080:8000"
+         - ./docker/config/wsgi/.env
       depends_on:
          - database
       networks:
@@ -27,12 +25,12 @@ services:
    database:
       image: postgres:latest
       restart: always
-      environment:
-          POSTGRES_USER: gunicorn_user
-          POSTGRES_PASSWORD: s00p3rs3cr34
-          POSTGRES_DB: website
+      env_file:
+         - ./docker/config/database/.env
       volumes:
          - database-data:/var/lib/postgresql/data
+      networks:
+         - nginx_network
 volumes:
    database-data:
 
