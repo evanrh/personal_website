@@ -1,0 +1,21 @@
+{
+  "name": "Evan's Website",
+  "short_name": "Evan's Website",
+  "theme_color": "#CBD394",
+  "background_color": "#F1F7C6",
+  "icons": [
+      {
+        "src": "/static/images/android-chrome-192x192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/static/images/android-chrome-512x512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

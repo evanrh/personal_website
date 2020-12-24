@@ -1,9 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN">
+<!DOCTYPE html> 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
     {% set site = "Evan's Web Server" %}
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="apple-mobile-web-app-title" content="Evan's Website">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
       {% block description %}<meta name="description" content="Evan Hastings' Web Server">{% endblock %}
       {% block metaTags %}<meta name="keywords" content="Python,Resume,Flask,Networking,Security">{% endblock %}
       {% if title %}
@@ -15,11 +18,11 @@
       <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css">
 
       <!-- Favicon links -->
-      <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
-      <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
-      <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
-      <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
-      <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+      <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+      <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+      <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
       {% block head %}{% endblock %}
     </head>
     <body>
