@@ -4,9 +4,9 @@
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="apple-mobile-web-app-title" content="Evan's Website">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		  <meta name="apple-mobile-web-app-title" content="Evan's Website">
+		  <meta name="apple-mobile-web-app-capable" content="yes">
+		  <meta name="apple-mobile-web-app-status-bar-style" content="black">
       {% block description %}<meta name="description" content="Evan Hastings' Web Server">{% endblock %}
       {% block metaTags %}<meta name="keywords" content="Python,Resume,Flask,Networking,Security">{% endblock %}
       {% if title %}
@@ -69,6 +69,7 @@
         <script>
           $SCRIPT_ROOT = "{{ url_for('home.index') }}";
         </script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
         {# This block is here so that any part of the site that does not need analytics can override it #}
         {% block analytics %}
         <script>
